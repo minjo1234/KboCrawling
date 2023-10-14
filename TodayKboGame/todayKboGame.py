@@ -19,10 +19,7 @@ url = 'https://sports.news.naver.com/kbaseball/schedule/index.nhn'
 driver.get(url)
 todayGameInfoList = []
 a_elements = []
-time.sleep(2
-
-
-           )
+time.sleep(2)
 try:
     todaykboGame = driver.find_element(By.CSS_SELECTOR, 'div.sch_tb2.selected')
 except NoSuchElementException:
@@ -87,7 +84,7 @@ for i in range((len(todayTeam) // 2)):
         teamLink.append('SS')
     elif (rightTeam == 'KIA'):
         teamLink.append('HT')
-    elif (todayTeam[i] == 'NC'):
+    elif (rightTeam == 'NC'):
         teamLink.append('NC')
     else:
         teamLink.append('OB')
@@ -186,7 +183,6 @@ for i in range(len(teamLink) // 2):
             By.XPATH, '//*[@id="content"]/div/div/section[1]/div[2]/div[3]/div').text
 
         TodayGameInfo = {
-            "RemainingStartTime": RemainingStartTime,
             "leftTeamName": leftTemaName,
             "leftTeam": leftTeam,
             "leftVestHitter": leftVestHitter,
