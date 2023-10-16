@@ -90,8 +90,8 @@ for i in range(len(teamLink) // 2):
     href = formatted_date + teamLink[i * 2] + teamLink[(i*2) + 1]
     url = f'https://m.sports.naver.com/game/2023{href}02023/preview'
     driver.get(url)
-
     time.sleep(2)
+
     State_Game = driver.find_element(
         By.XPATH, '//*[@id="content"]/div/div/section[1]/div[2]/div[1]').text
     url_list.append(url)
@@ -101,29 +101,29 @@ for i in range(len(teamLink) // 2):
     RightTeam_Name = driver.find_element(
         By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[1]/div[1]/div[3]/div[1]').text
 
+    try:
+        leftTeam_Score = driver.find_element(
+            By.XPATH, '//*[@id="content"]/div/div/section[1]/div[2]/div[2]/div[2]/strong').text
+        rightTeam_Score = driver.find_element(
+            By.XPATH, '//*[@id="content"]/div/div/section[1]/div[2]/div[3]/div[2]/strong').text
+        score_text = driver.find_element(
+            By.XPATH, '//*[@id="content"]/div/div/section[1]/div[3]/div').text
+    except NoSuchElementException:
+        leftTeam_Score = "요소를 찾을 수 없음"
+        rightTeam_Score = "요소를 찾을 수 없음"
+        score_text = '요소를 찾을수 가 없다.'
+
+    # TodayGameInfo
     TodayLeftGameInfo = driver.find_element(
         By.XPATH, '//*[@id="content"]/div/div/section[1]/div[2]/div[2]/div').text
     TodayRightGameInfo = driver.find_element(
         By.XPATH, '//*[@id="content"]/div/div/section[1]/div[2]/div[3]/div').text
-    # 이미지 요소 식별
-    # 이미지 요소의 XPath 식별
     LeftImage_xpath = '//*[@id="content"]/div/div/section[1]/div[2]/div[2]/div/div[1]/img'
-    # 이미지의 src 속성 가져오기
     LeftImage_element = driver.find_element(By.XPATH, LeftImage_xpath)
     LeftImage_src = LeftImage_element.get_attribute('src')
-    # 이미지의 너비와 높이 가져오기
-    # 결과 출력
     RightImage_path = '//*[@id="content"]/div/div/section[1]/div[2]/div[3]/div/div[1]/img'
-    # 이미지의 src 속성 가져오기
     RightImage_element = driver.find_element(By.XPATH, RightImage_path)
     Rightimage_src = RightImage_element.get_attribute('src')
-    # 결과 출력
-    Start_Time = driver.find_element(
-        By.XPATH, '//*[@id="webplayerWrap"]/div/div/div[3]/div/div/div/time').text
-    Time = driver.find_element(
-        By.XPATH, '//*[@id="content"]/div/div/section[1]/div[2]/div[1]/p[2]/span').text
-
-    # into the game
 
     leftTeam = []
     rightTeam = []
@@ -134,6 +134,7 @@ for i in range(len(teamLink) // 2):
     leftTeamLineUp = []
     rightTeamLineUp = []
 
+    # TeamInfo
     TeamInfo = driver.find_elements(
         By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[1]/div[1]/div')
     leftRecord = driver.find_elements(
@@ -148,34 +149,36 @@ for i in range(len(teamLink) // 2):
         leftTeam.append(leftRecord[i].text)
         rightTeam.append(rightRecord[i].text)
 
-    leftPitcherName = driver.find_element(
-        By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[2]/div[1]/a/div[2]')
-    leftPitherInfo = driver.find_elements(
-        By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[3]/table/tbody/tr/td[1]')
-    rightPitcherName = driver.find_element(
-        By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[2]/div[3]/a/div[2]')
-    rightPitcherInfo = driver.find_elements(
-        By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[3]/table/tbody/tr/td[2]')
+        # pitcherw
+        leftPitcherName = driver.find_element(
+            By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[2]/div[1]/a/div[2]')
+        leftPitherInfo = driver.find_elements(
+            By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[3]/table/tbody/tr/td[1]')
+        rightPitcherName = driver.find_element(
+            By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[2]/div[3]/a/div[2]')
+        rightPitcherInfo = driver.find_elements(
+            By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[3]/table/tbody/tr/td[2]')
 
-    leftVestPitcher.append(leftPitcherName.text)
-    rightVestPitcher.append(rightPitcherName.text)
+        leftVestPitcher.append(leftPitcherName.text)
+        rightVestPitcher.append(rightPitcherName.text)
 
-    for i in range(len(leftPitherInfo)):
-        leftVestPitcher.append(leftPitherInfo[i].text)
-        rightVestPitcher.append(rightPitcherInfo[i].text)
+        for i in range(len(leftPitherInfo)):
+            leftVestPitcher.append(leftPitherInfo[i].text)
+            rightVestPitcher.append(rightPitcherInfo[i].text)
 
-    leftHitterName = driver.find_element(
-        By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[5]/div[1]/a/div[2]')
-    rightHitterName = driver.find_element(
-        By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[5]/div[3]/a/div[2]')
-    leftHitterInfo = driver.find_elements(
-        By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[6]/table/tbody//td[1]')
-    rightHitterInfo = driver.find_elements(
-        By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[6]/table/tbody/tr/td[2]'
-    )
+        # hitter
+        leftHitterName = driver.find_element(
+            By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[5]/div[1]/a/div[2]')
+        rightHitterName = driver.find_element(
+            By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[5]/div[3]/a/div[2]')
+        leftHitterInfo = driver.find_elements(
+            By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[6]/table/tbody//td[1]')
+        rightHitterInfo = driver.find_elements(
+            By.XPATH, '//*[@id="content"]/div/div/section[2]/div[2]/div/div[6]/table/tbody/tr/td[2]'
+        )
 
-    leftVestHitter.append(leftHitterName.text)
-    rightVestHitter.append(rightHitterName.text)
+        leftVestHitter.append(leftHitterName.text)
+        rightVestHitter.append(rightHitterName.text)
 
     for i in range(len(leftHitterInfo)):
         leftVestHitter.append(leftHitterInfo[i].text)
@@ -186,23 +189,22 @@ for i in range(len(teamLink) // 2):
         'TodayRightGameInfo': TodayRightGameInfo,
         'LeftImage_src': LeftImage_src,
         'RightImage_src': Rightimage_src,
-        'Start_Time': Start_Time,
-        'State_Game': State_Game,
         'LeftTeam_Name': LeftTeam_Name,
         'RightTeam_Name': RightTeam_Name,
-        'Time': Time,
         'leftTeam': leftTeam,
         'rightTeam': rightTeam,
+        'State_Game': State_Game,
         'leftVestPitcher': leftVestPitcher,
         'rightVestPitcher': rightVestPitcher,
         'leftVestHitter': leftVestHitter,
         'rightVestHitter': rightVestHitter,
-
+        'leftTeam_Score': leftTeam_Score,
+        'rightTeam_Score': rightTeam_Score,
+        'score_text': score_text,
     }
     TodayGameList.append(TodayGame)
 
-
 print(TodayGameList)
 
-with open("todayGameUrl.json", "w", encoding="utf-8") as json_file:
-    json.dump(url_list, json_file, ensure_ascii=False, indent=4)
+# with open("todayGameUrl.json", "w", encoding="utf-8") as json_file:
+#     json.dump(url_list, json_file, ensure_ascii=False, indent=4)
