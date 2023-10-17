@@ -26,7 +26,9 @@
       "1.62",
       "3승 0패 평균자책 0.59"
     ],
-    "leftTeamLineUp": ["선발\n한현희\n우언"],
+    "leftTeamLineUp": [
+      "선발\n한현희\n우언"
+    ],
     "GameLeftStartingPlayer": "롯데\n선-한현희",
     "rightTeamName": "한화",
     "rightTeam": [
@@ -54,7 +56,9 @@
       "1.18",
       "0승 0패 평균자책 2.38"
     ],
-    "rightTeamLineUp": ["선발\n페냐\n우투"],
+    "rightTeamLineUp": [
+      "선발\n페냐\n우투"
+    ],
     "GameRightStartingPlayer ": "홈한화\n선-페냐"
   },
   {
@@ -85,7 +89,9 @@
       "1.08",
       "0승 1패 평균자책 15.75"
     ],
-    "leftTeamLineUp": ["선발\n브랜든\n좌투"],
+    "leftTeamLineUp": [
+      "선발\n브랜든\n좌투"
+    ],
     "GameLeftStartingPlayer": "두산\n선-브랜든",
     "rightTeamName": "LG",
     "rightTeam": [
@@ -113,7 +119,9 @@
       "1.46",
       "1승 0패 평균자책 1.80"
     ],
-    "rightTeamLineUp": ["선발\n김윤식\n좌투"],
+    "rightTeamLineUp": [
+      "선발\n김윤식\n좌투"
+    ],
     "GameRightStartingPlayer ": "홈LG\n선-김윤식"
   },
   {
@@ -144,7 +152,9 @@
       "1.66",
       "3승 0패 평균자책 0.55"
     ],
-    "leftTeamLineUp": ["선발\n문승원\n우투"],
+    "leftTeamLineUp": [
+      "선발\n문승원\n우투"
+    ],
     "GameLeftStartingPlayer": "SSG\n선-문승원",
     "rightTeamName": "삼성",
     "rightTeam": [
@@ -172,7 +182,9 @@
       "1.14",
       "1승 0패 평균자책 2.08"
     ],
-    "rightTeamLineUp": ["선발\n뷰캐넌\n우투"],
+    "rightTeamLineUp": [
+      "선발\n뷰캐넌\n우투"
+    ],
     "GameRightStartingPlayer ": "홈삼성\n선-뷰캐넌"
   }
 ]

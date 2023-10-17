@@ -13,11 +13,42 @@ try:
     driver.get(url)
     time.sleep(2)
     finalGroupA = tr_elements = driver.find_elements(
-        By.XPATH, '//*[@id="ts1"]/tbody/tr/')
+        By.XPATH, '//*[@id="ts1"]/tbody/tr')
     finalGroupB = tr_elements = driver.find_elements(
         By.XPATH, '//*[@id="ts2"]/tbody/tr')
-    print(len(finalGroupA))
+    k_league_teamList = []
+    for i in range(len(finalGroupA)+(len(finalGroupB))):
+        if (i < 6):
+            td_elements = finalGroupA[i].find_elements(By.TAG_NAME, 'td')
+        if (i >= 6):
+            td_elements = finalGroupB[i-6].find_elements(By.TAG_NAME, 'td')
+        k_league_Ranking = td_elements[0].text
+        k_league_clupName = td_elements[1].text
+        k_league_clupGame = td_elements[2].text
+        k_league_WinPoint = td_elements[3].text
+        k_league_Win = td_elements[4].text
+        k_league_Draw = td_elements[5].text
+        k_league_Lose = td_elements[6].text
+        k_league_Score = td_elements[7].text
+        k_league_LoseScore = td_elements[8].text
+        k_league_GainorLoss = td_elements[9].text
+        k_league_recent = td_elements[10].text
 
+        k_league_Team = {
+            "k_league_Ranking": k_league_Ranking,
+            "k_league_clupName": k_league_clupName,
+            "k_league_clupGame": k_league_clupGame,
+            "k_league_WinPoint": k_league_WinPoint,
+            "k_league_Win": k_league_Win,
+            "k_league_Draw": k_league_Draw,
+            "k_league_Lose": k_league_Lose,
+            "k_league_Score": k_league_Score,
+            "k_league_LoseScore": k_league_LoseScore,
+            "k_league_GainorLoss": k_league_GainorLoss,
+            "k_league_recent": k_league_recent
+        }
+        k_league_teamList.append(k_league_Team)
+    print(k_league_teamList)
     # MySQL 데이터베이스 설정
     db_config = {
         "host": "localhost",
@@ -36,16 +67,19 @@ try:
 
         # player_data 테이블 생성 (playerId 컬럼은 AUTO_INCREMENT로 설정)
         create_table_sql = """
-        CREATE TABLE IF NOT EXISTS kboPlayers (
-            K_TeamId BIGINT AUTO_INCREMENT PRIMARY KEY,
-            K_Team_Name VARCHAR(20) NOT NULL,
-            K_Team_Game VARCHAR(20) NOT NULL,
-            K_Team_Win VARCHAR(20) NOT NULL,
-            K_Team_Drawn VARCHAR(20) NOT NULL,
-            k_Team_Lose VARCHAR(20) NOT NULL,
-            K_Team_Score VARCHAR(20) NOT NULL,
-            K_Team_Lose_Score VARCHAR(20) NOT NULL,
-            K_Team_Recent5_Games VARCHAR(20) NOT NULL, 
+        CREATE TABLE IF NOT EXISTS KleagueTeam (
+            k_TeamId BIGINT AUTO_INCREMENT PRIMARY KEY,
+            k_league_Ranking VARCHAR(255) NOT NULL,
+            k_league_clupName VARCHAR(255) NOT NULL, 
+            k_league_clupGame VARCHAR(255) NOT NULL ,
+            k_league_WinPoint VARCHAR(255) NOT NULL, 
+            k_league_Win VARCHAR(255) NOT NULL, 
+            k_league_Draw VARCHAR(255) NOT NULL ,
+            k_league_Lose VARCHAR(255) NOT NULL  , 
+            k_league_Score VARCHAR(255) NOT NULL  , 
+            k_league_LoseScore VARCHAR(255) NOT NULL  , 
+            k_league_GainorLoss VARCHAR(255) NOT NULL  , 
+            k_league_recent VARCHAR(255) NOT NULL 
         );
         """
 
@@ -53,14 +87,19 @@ try:
         db.commit()
 
         # JSON 데이터를 MySQL 데이터베이스에 삽입
-        for player in player_list:
-            sql = "INSERT INTO kboPlayers (player_Num, player_Name, player_Team, player_Position, player_Birth, player_Physical) VALUES (%s, %s, %s, %s, %s, %s)"
-            val = (player["player_Num"],
-                   player["player_Name"],
-                   player["player_Team"],
-                   player["player_Position"],
-                   player["player_Birth"],
-                   player["player_Physical"])
+        for k_league in k_league_teamList:
+            sql = "INSERT INTO KleagueTeam (k_league_Ranking, k_league_clupName, k_league_clupGame, k_league_WinPoint, k_league_Win , k_league_Draw, k_league_Lose , k_league_Score ,  k_league_LoseScore , k_league_GainorLoss , k_league_recent) VALUES (%s, %s, %s, %s, %s, %s , %s , %s , %s ,%s , %s)"
+            val = (k_league["k_league_Ranking"],
+                   k_league["k_league_clupName"],
+                   k_league["k_league_clupGame"],
+                   k_league["k_league_WinPoint"],
+                   k_league["k_league_Win"],
+                   k_league["k_league_Draw"],
+                   k_league["k_league_Lose"],
+                   k_league["k_league_Score"],
+                   k_league["k_league_LoseScore"],
+                   k_league["k_league_GainorLoss"],
+                   k_league["k_league_recent"])
             cursor.execute(sql, val)
             db.commit()
 
