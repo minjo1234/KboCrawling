@@ -6,7 +6,7 @@ import mysql.connector
 kbo_TeamData = []
 
 try:
-    url = "https://www.koreabaseba  ll.com/Record/TeamRank/TeamRank.aspx"
+    url = "https://www.koreabaseball.com/Record/TeamRank/TeamRank.aspx"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
 
