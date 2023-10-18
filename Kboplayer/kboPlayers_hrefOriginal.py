@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 import time
 import json
-import mysql.connector
 from selenium.common.exceptions import NoSuchElementException
 import re
 
