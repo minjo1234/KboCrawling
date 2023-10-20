@@ -30,13 +30,12 @@ try:
             continue
         try:
             th_element = tr_elements[i].find_element(By.TAG_NAME, 'th').text
-            print("th" + th_element)
         except NoSuchElementException:
-            print('err')
+            pass
         td_elements = tr_elements[i].find_elements(By.TAG_NAME, 'td')
 
         month_game_dict = {
-            '날짜': th_element,
+            'day': th_element,
             'start_time': td_elements[0].text,
             'team_vs': td_elements[1].text
         }
@@ -44,6 +43,7 @@ try:
         month_game_list.append(month_game_dict)
 
     print(month_game_list)
+
 
 except Exception as err:
     print(err)
