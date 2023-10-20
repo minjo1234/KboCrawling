@@ -31,14 +31,22 @@ try:
         }
         kbo_TeamRelativeRecord.append(td_elements_data)
 
-    # MySQL 데이터베이스 연결 설정
     db_config = {
         "host": "localhost",
-        "port": 3306,  # 포트 번호를 별도로 지정
+        "port": 3306,
         "user": "root",
-        "password": "Wlgns3350@",
-        "database": "SportInfo"
+        "password": "1234",
+        "database": "sportinfo"
     }
+
+    # MySQL 데이터베이스 연결 설정
+    # db_config = {
+    #     "host": "localhost",
+    #     "port": 3306,  # 포트 번호를 별도로 지정
+    #     "user": "root",
+    #     "password": "1234",
+    #     "database": "lee"
+    # }
 
     # MySQL 데이터베이스에 연결
     connection = mysql.connector.connect(**db_config)
@@ -75,7 +83,7 @@ try:
         ) 
         VALUES (%s, %s , %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) 
         """
-        val = (
+        val =(
             kbo_team["team_Name"],
             kbo_team["team_Vs1st"],
             kbo_team["team_Vs2nd"],

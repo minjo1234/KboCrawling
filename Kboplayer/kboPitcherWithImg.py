@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import mysql.connector
 
-file_path = '../kboPlayers_href.json'
+file_path = '../KboPlayers_href.json'
 kbo_pitchers = []
 count = 0
 try:
@@ -25,7 +25,6 @@ try:
                 'span', id='cphContents_cphContents_cphContents_playerProfile_lblName').text
             # db 연계 상 player_Id 맞추려 autoIncrement 대신 사용
             count += 1
-            print(count)
 
             if '투수' in players_position_elements:
                 # player_data
@@ -35,7 +34,6 @@ try:
 
                 # 이미지 URL 찾기
                 img_tag = soup.find('img', id='cphContents_cphContents_cphContents_playerProfile_imgProgile')
-                print(img_tag)
 
                 player_img_url = img_tag.get('src')
                 print(player_img_url)
@@ -77,11 +75,19 @@ try:
 
     db_config = {
         "host": "localhost",
-        "port": 3306,  # 포트 번호를 별도로 지정
+        "port": 3306,
         "user": "root",
         "password": "1234",
-        "database": "lee"
+        "database": "sportinfo"
     }
+
+    # db_config = {
+    #     "host": "localhost",
+    #     "port": 3306,  # 포트 번호를 별도로 지정
+    #     "user": "root",
+    #     "password": "1234",
+    #     "database": "lee"
+    # }
 
     # 데이터베이스 연결 생성
     db = mysql.connector.connect(**db_config)
