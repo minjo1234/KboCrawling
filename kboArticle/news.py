@@ -5,7 +5,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import mysql.connector
 from datetime import datetime
-import re
 
 # 현재 날짜 가져오기
 current_date = datetime.now()
@@ -16,7 +15,7 @@ db_config = {
     'host': '127.0.0.1',       # MySQL 호스트 주소
     'user': 'root',            # MySQL 사용자 이름
     'password': '1234',        # MySQL 비밀번호
-    'database': 'mydb'        # MySQL 데이터베이스 이름
+    'database': 'SportInfo'        # MySQL 데이터베이스 이름
 }
 
 # MySQL 연결
@@ -30,7 +29,7 @@ CREATE TABLE IF NOT EXISTS news (
     title VARCHAR(255),
     content TEXT,
     url VARCHAR(255),
-    news_content VARCHAR(10000),
+    news_content TEXT,
     press VARCHAR(255),
     news_time VARCHAR(255),
     image_url VARCHAR(255)
@@ -52,7 +51,6 @@ data_list = []
 # 시작 페이지 설정
 start_page = 1
 last_page_content = None  # 마지막 페이지의 내용을 저장하기 위한 변수
-image_url = None  # 이미지 URL을 초기화
 
 # 네이버 스포츠 페이지 열기
 driver.get('https://sports.news.naver.com/')
@@ -65,6 +63,22 @@ crawled_news_titles = set()
 
 cursor.execute("SELECT title FROM news")
 existing_titles = set(row[0] for row in cursor.fetchall())
+
+# 이미지 URL 추출 함수
+def extract_image_url(news_item):
+    image_element = news_item.select_one('img.lazyLoadImage')
+    if image_element:
+        image_url = image_element.get('src', '')  # 이미지 URL 추출
+
+        # ?type= 이전 부분 추출
+        base_url = image_url.split('?type=')[0]
+
+        # ?type= 이후의 부분을 변경하여 다른 크기로 설정 (예: w900)
+        image_url = base_url + "?type=w900"
+
+        return image_url
+
+    return None
 
 while True:
     # 페이지 URL 생성
@@ -112,6 +126,9 @@ while True:
                     # 시간 형식 가공
                     news_time = datetime.strptime(time_text, '%Y.%m.%d %H:%M').strftime('%Y-%m-%d %H:%M:%S') if time_text else None
 
+                    # 이미지 URL 추출
+                    image_url = extract_image_url(news_item)
+
                     # 뉴스 아이템의 URL 가져오기
                     news_url = news_item.select_one('div > a')['href']
                     news_url = news_url.replace("/kbaseball/news/read?", "https://sports.news.naver.com/news?")
@@ -125,14 +142,6 @@ while True:
                     # 내용 크롤링
                     news_page_source = driver.page_source
                     news_soup = BeautifulSoup(news_page_source, 'html.parser')
-
-                    # 이미지 URL 추출 (첫 번째 이미지만)
-                    image_element = news_soup.select_one('#newsEndContents > span > img')
-                    if image_element:
-                        image_url = image_element.get('src')
-                        match = re.search(r'(_001_.*?)\.', image_url)
-                        if match:
-                            image_url_with_001 = match.group(1) + '.jpeg' 
 
                     # 특정 요소 제외
                     reporter_area = news_soup.select_one('#newsEndContents > div.reporter_area')
