@@ -10,8 +10,7 @@ try:
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
 
-    table = soup.find(
-        "table", {"summary": "순위, 팀명,승,패,무,승률,승차,최근10경기,연속,홈,방문"})
+    table = soup.find("table", {"summary": "순위, 팀명,승,패,무,승률,승차,최근10경기,연속,홈,방문"})
 
     # 테이블의 각 행을 반복하여 데이터 추출
     for row in table.find("tbody").find_all("tr"):
@@ -32,14 +31,22 @@ try:
         }
         kbo_TeamData.append(td_elements_data)
 
-    # MySQL 데이터베이스 연결 설정
     db_config = {
         "host": "localhost",
-        "port": 3306,  # 포트 번호를 별도로 지정
+        "port": 3306,
         "user": "root",
-        "password": "Wlgns3350@",
-        "database": "SportInfo"
+        "password": "1234",
+        "database": "sportinfo"
     }
+
+    # MySQL 데이터베이스 연결 설정
+    # db_config = {
+    #     "host": "localhost",
+    #     "port": 3306,  # 포트 번호를 별도로 지정
+    #     "user": "root",
+    #     "password": "1234",
+    #     "database": "lee"
+    # }
 
     # MySQL 데이터베이스에 연결
     connection = mysql.connector.connect(**db_config)
@@ -76,7 +83,7 @@ try:
         ) 
         VALUES (%s, %s , %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) 
         """
-        val = (
+        val =(
             kbo_team["team_Ranking"],
             kbo_team["team_Name"],
             kbo_team["team_Game"],

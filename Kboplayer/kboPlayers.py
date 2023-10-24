@@ -59,17 +59,25 @@ for p in range(0, 10):
             player_list.append(player_dict)
 
 # JSON 파일에 데이터 저장
-with open("player_data.json", "w", encoding="utf-8") as json_file:
-    json.dump(player_list, json_file, ensure_ascii=False, indent=4)
+# with open("player_data.json", "w", encoding="utf-8") as json_file:
+#     json.dump(player_list, json_file, ensure_ascii=False, indent=4)
 
 # MySQL 데이터베이스 설정
 db_config = {
     "host": "localhost",
     "port": 3306,
     "user": "root",
-    "password": "Wlgns3350@",
-    "database": "SportInfo"
+    "password": "1234",
+    "database": "sportinfo"
 }
+
+# db_config = {
+#     "host": "localhost",
+#     "port": 3306,
+#     "user": "root",
+#     "password": "1234",
+#     "database": "lee"
+# }
 
 # 데이터베이스 연결 생성
 db = mysql.connector.connect(**db_config)
@@ -80,14 +88,14 @@ try:
 
     # player_data 테이블 생성 (playerId 컬럼은 AUTO_INCREMENT로 설정)
     create_table_sql = """
-    CREATE TABLE IF NOT EXISTS kboPlayers (
-        playerId BIGINT AUTO_INCREMENT PRIMARY KEY,
-        player_Num VARCHAR(255),
-        player_Name VARCHAR(255),
-        player_Team VARCHAR(255),
-        player_Position VARCHAR(255),
-        player_Birth DATE,
-        player_Physical VARCHAR(255)
+    CREATE TABLE IF NOT EXISTS kbo_Players (
+        player_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+        player_num VARCHAR(255),
+        player_name VARCHAR(255),
+        player_team VARCHAR(255),
+        player_position VARCHAR(255),
+        player_birth DATE,
+        player_physical VARCHAR(255)
     );
     """
 
@@ -96,7 +104,7 @@ try:
 
     # JSON 데이터를 MySQL 데이터베이스에 삽입
     for player in player_list:
-        sql = "INSERT INTO kboPlayers (player_Num, player_Name, player_Team, player_Position, player_Birth, player_Physical) VALUES (%s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO kbo_Players (player_num, player_name, player_team, player_position, player_birth, player_physical) VALUES (%s, %s, %s, %s, %s, %s)"
         val = (player["player_Num"],
                player["player_Name"],
                player["player_Team"],

@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import mysql.connector
 
-file_path = '../kboPlayers_href.json'
+file_path = '../KboPlayers_href.json'
 kbo_hitters = []
 count = 0
 try:
@@ -86,11 +86,19 @@ try:
 
     db_config = {
         "host": "localhost",
-        "port": 3306,  # 포트 번호를 별도로 지정
+        "port": 3306,
         "user": "root",
         "password": "1234",
-        "database": "lee"
+        "database": "sportinfo"
     }
+
+    # db_config = {
+    #     "host": "localhost",
+    #     "port": 3306,  # 포트 번호를 별도로 지정
+    #     "user": "root",
+    #     "password": "1234",
+    #     "database": "lee"
+    # }
 
     # 데이터베이스 연결 생성
     db = mysql.connector.connect(**db_config)
@@ -121,7 +129,6 @@ try:
         db.commit()
 
         for kbo_hitter in kbo_hitters:
-            print(kbo_hitter)
             sql = """
             INSERT INTO kbo_Hitter(player_id , player_name , player_href, player_team, player_avg, player_game,  
             player_ab, player_r, player_h, player_2b, player_3b, player_hr, player_image_url)
