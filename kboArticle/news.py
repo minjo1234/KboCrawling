@@ -12,10 +12,12 @@ date_string = current_date.strftime("%Y%m%d")
 
 # MySQL 연결 설정
 db_config = {
-    'host': '127.0.0.1',       # MySQL 호스트 주소
-    'user': 'root',            # MySQL 사용자 이름
-    'password': '1234',        # MySQL 비밀번호
-    'database': 'SportInfo'        # MySQL 데이터베이스 이름
+    "host": "localhost",
+    "port": 3306,
+    "user": "root",
+    "password": "1234",
+    "database": "SportInfo"
+ 
 }
 
 # MySQL 연결

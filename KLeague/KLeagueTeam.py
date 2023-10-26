@@ -54,8 +54,8 @@ try:
         "host": "localhost",
         "port": 3306,
         "user": "root",
-        "password": "Wlgns3350@",
-        "database": "SportInfo"
+        "password": "1234",
+        "database": "sportinfo"
     }
 
     # 데이터베이스 연결 생성
@@ -67,18 +67,18 @@ try:
 
         # player_data 테이블 생성 (playerId 컬럼은 AUTO_INCREMENT로 설정)
         create_table_sql = """
-        CREATE TABLE IF NOT EXISTS KleagueTeam (
-            k_TeamId BIGINT AUTO_INCREMENT PRIMARY KEY,
+        CREATE TABLE IF NOT EXISTS K_league_Team (
+            k_Team_Id BIGINT AUTO_INCREMENT PRIMARY KEY,
             k_league_Ranking VARCHAR(255) NOT NULL,
-            k_league_clupName VARCHAR(255) NOT NULL, 
-            k_league_clupGame VARCHAR(255) NOT NULL ,
-            k_league_WinPoint VARCHAR(255) NOT NULL, 
+            k_league_club_Name VARCHAR(255) NOT NULL, 
+            k_league_club_Game VARCHAR(255) NOT NULL ,
+            k_league_Win_Point VARCHAR(255) NOT NULL, 
             k_league_Win VARCHAR(255) NOT NULL, 
             k_league_Draw VARCHAR(255) NOT NULL ,
             k_league_Lose VARCHAR(255) NOT NULL  , 
             k_league_Score VARCHAR(255) NOT NULL  , 
-            k_league_LoseScore VARCHAR(255) NOT NULL  , 
-            k_league_GainorLoss VARCHAR(255) NOT NULL  , 
+            k_league_Lose_Score VARCHAR(255) NOT NULL  , 
+            k_league_Gainor_Loss VARCHAR(255) NOT NULL  , 
             k_league_recent VARCHAR(255) NOT NULL 
         );
         """
@@ -88,7 +88,7 @@ try:
 
         # JSON 데이터를 MySQL 데이터베이스에 삽입
         for k_league in k_league_teamList:
-            sql = "INSERT INTO KleagueTeam (k_league_Ranking, k_league_clupName, k_league_clupGame, k_league_WinPoint, k_league_Win , k_league_Draw, k_league_Lose , k_league_Score ,  k_league_LoseScore , k_league_GainorLoss , k_league_recent) VALUES (%s, %s, %s, %s, %s, %s , %s , %s , %s ,%s , %s)"
+            sql = "INSERT INTO K_league_Team (k_league_Ranking, k_league_club_Name, k_league_club_Game, k_league_Win_Point, k_league_Win , k_league_Draw, k_league_Lose , k_league_Score ,  k_league_Lose_Score , k_league_Gainor_Loss , k_league_recent) VALUES (%s, %s, %s, %s, %s, %s , %s , %s , %s ,%s , %s)"
             val = (k_league["k_league_Ranking"],
                    k_league["k_league_clupName"],
                    k_league["k_league_clupGame"],

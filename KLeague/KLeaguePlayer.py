@@ -85,7 +85,7 @@ try:
         "host": "localhost",
         "port": 3306,
         "user": "root",
-        "password": "Wlgns3350@",
+        "password": "1234",
         "database": "SportInfo"
     }
 
@@ -131,7 +131,7 @@ try:
             db.close()
     driver.quit()
 
-    with open("k_league_player_id.json", "w", encoding="utf-8") as json_file:
+    with open("../k_league_player_id.json", "w", encoding="utf-8") as json_file:
         json.dump(player_id_list, json_file, ensure_ascii=False, indent=4)
 except Exception as e:
     print("예외 발생: " + str(e))  # 예외 객체를 문자열로 변환하여 출력

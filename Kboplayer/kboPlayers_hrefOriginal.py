@@ -14,6 +14,7 @@ url = 'https://www.koreabaseball.com/Player/Search.aspx'
 
 driver.get(url)
 TeamList = ['LG', 'KT', 'NC', 'OB', 'SK', 'HT', 'LT', 'HH', 'SS', 'WO']
+#TeamList = ['LG', 'KT', 'SK', 'NC', 'OB', 'HT', 'LT', 'SS', 'HH', 'WO']
 players_href = []
 i = 0
 for p in range(len(TeamList)):
@@ -36,7 +37,7 @@ for p in range(len(TeamList)):
 
         except NoSuchElementException:
             pass
-        time.sleep(3)
+        time.sleep(5)
         players = driver.find_elements(
             By.XPATH, '//*[@id="cphContents_cphContents_cphContents_udpRecord"]/div[2]/table/tbody/tr/td[2]/a')
 
@@ -50,7 +51,7 @@ for p in range(len(TeamList)):
                 players_href.append(player_href)
 
 
-with open("KboPlayers_href.json", "w", encoding="utf-8") as json_file:
+with open("../KboPlayers_hrefOrigin.json", "w", encoding="utf-8") as json_file:
     json.dump(players_href, json_file, ensure_ascii=False, indent=4)
 # player_detail = player_detail.get_attribute('href')s
 

@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import mysql.connector
 
-file_path = '../KboPlayers_href.json'
+file_path = '../KboPlayers_hrefOrigin.json'
 kbo_hitters = []
 count = 0
 try:
