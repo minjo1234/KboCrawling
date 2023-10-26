@@ -17,6 +17,7 @@ db_config = {
     "user": "root",
     "password": "1234",
     "database": "SportInfo"
+ 
 }
 
 # MySQL 연결
