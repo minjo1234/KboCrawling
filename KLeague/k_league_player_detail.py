@@ -1,10 +1,12 @@
+import time
+
 from bs4 import BeautifulSoup
 import requests
 import mysql.connector
 import json
 
 # JSON 파일 읽기
-with open("k_league_player_id.json", "r", encoding="utf-8") as json_file:
+with open("../k_league_player_id.json", "r", encoding="utf-8") as json_file:
     player_id_list = json.load(json_file)
 
 # player_id_list 변수에 JSON 데이터가 저장됩니다
@@ -25,24 +27,25 @@ for i in range(len(player_id_list)):
     player_info_element = soup.find("div", class_="f-wrap player")
 
     # name = player_info_element.find("span", class_="name").text
-    name = player_info_element.find("th", text="이름").find_next('td').text
+    # window 에선 text -> string 바꿔줘야함
+    name = player_info_element.find("th", string="이름").find_next('td').text
     # 소속 구단을 가져옵니다.
-    team = player_info_element.find("th", text="소속구단").find_next("td").text
+    team = player_info_element.find("th", string="소속구단").find_next("td").text
     # 포지션을 가져옵니다.
     position = player_info_element.find(
-        "th", text="포지션").find_next("td").text
+        "th", string="포지션").find_next("td").text
 
     # 배번을 가져옵니다. ㅁ
-    number = player_info_element.find("th", text="배번").find_next("td").text
+    number = player_info_element.find("th", string="배번").find_next("td").text
 
     # 국적을 가져옵니다.
     nationality = player_info_element.find(
-        "th", text="국적").find_next("td").text
+        "th", string="국적").find_next("td").text
 
-    height = player_info_element.find("th", text="키").find_next("td").text
+    height = player_info_element.find("th", string="키").find_next("td").text
 
     # 몸무게를 가져옵니다.
-    weight = player_info_element.find("th", text="몸무게").find_next("td").text
+    weight = player_info_element.find("th", string="몸무게").find_next("td").text
 
     # 생년월일을 가져옵니다.
     birthdate = player_info_element.find(
@@ -65,7 +68,7 @@ db_config = {
     "host": "localhost",
     "port": 3306,
     "user": "root",
-    "password": "Wlgns3350@",
+    "password": "1234",
     "database": "SportInfo"
 }
 
